@@ -1,0 +1,44 @@
+#b1{
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: right;
+    /* background-size: cover; */
+    display: grid;
+    /* margin-right: 225px; */
+    
+}
+
+#b2{
+    
+    font-family: Constantia, Times, serif;
+        word-spacing: 1px;
+    font-weight: 800;
+    margin-left: 120px;
+    /* margin-top: 30px; */
+    
+}
+
+#b3{
+    font-size: 72px;
+    font-family: "Ink Free", Times, serif;
+    color: red;
+    text-shadow: 1px;
+}
+
+#b4{
+    /* border-color: #FF0000 !important;  */
+    box-shadow: none !important;
+    width: 500px;
+    
+
+      
+
+}
+
+.form-control:focus{
+    
+     /* border-color: #f2f1f1 !important; */
+    box-shadow: none !important;
+    outline: 0;
+      
+}

@@ -1,0 +1,37 @@
+#he1{
+    font-family: "Ink Free", Times, serif;
+    
+}
+#he2{
+    font-weight: 600;
+    color:#C92222;
+
+}
+
+.sp2{
+    font-size: 22px;
+    font-family: NSimSun, Times, serif;
+    color: white;
+
+   
+}
+
+a{
+    text-decoration: none !important  ;
+    color: white !important;
+}
+
+.dd{
+    cursor: pointer;
+}
+
+.head{
+    font-family: "Segoe Print", Times, serif;
+    color: rgb(212, 35, 35);
+
+}
+
+.head2{
+    font-family: "Segoe Print", Times, serif;
+font-weight: 300;
+}
