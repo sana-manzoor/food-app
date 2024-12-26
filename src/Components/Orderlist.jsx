@@ -1,11 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Table , Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { deleteUserApi } from '../Services/allApis'
+import { deleteUserApi, orderlist } from '../Services/allApis'
 
 
 function Orderlist() {
     const [isOpen, setIsOpen] = React.useState(true);
+
+    const [orderList,setOrderList]=useState([])
+
+    const getorderslist = async () => {
+            // const reqHeader = {
+            //     "Content-Type": "application/json", "Authorization": `Bearer ${token}`
+            // }
+            // console.log(reqHeader)
+            const result = await orderlist()
+            console.log(result)
+            if (result.status === 200) {
+                console.log(result.data)
+                setOrderList(result.data)
+                console.log(orderList)
+            }
+           
+        }
+
+        useEffect(()=>{
+        getorderslist()
+            },[])
 
 
 
@@ -27,29 +48,26 @@ function Orderlist() {
                         <Table striped bordered hover className='container text-center'>
                             <thead className='head2'>
                                 <tr className='text-center lead'>
-                                    <th>Id</th>
-                                    <th>Email</th>
+                                    {/* <th>Id</th> */}
+                                    <th>OrderId</th>
                                     <th>UserId</th>
-                                    <th>Amount</th>
-                                    <th>Date</th>
+                                    <th>Uname</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className='lead font-weight-normal'>
+                            {
+                                    orderList.map(item => (
+                                        <tr className='lead font-weight-normal'>
+                                            {/* <td>{item._id}</td> */}
+                                            <td>{item.id}</td>
+                                            <td>{item.uid}</td>
+                                            <td>{item.uname}</td>
+                                            <td>Payment Successfull</td>
+                                        </tr>
 
-                                    <td>1</td>
-                                    <td>sana@gmail.com</td>
-                                    <td>871910</td>
-                                    <td>rs400</td>
-                                    <td>27-08-2024</td>
-                                </tr>
-                                <tr className='lead font-weight-normal'>
-                                    <td>2</td>
-                                    <td>sana@gmail.com</td>
-                                    <td>871910</td>
-                                    <td>rs400</td>
-                                    <td>27-08-2024</td>
-                                </tr>
+                                    ))
+                                }
                                
                             </tbody>
                         </Table>

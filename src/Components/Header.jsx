@@ -5,22 +5,37 @@ import './Header.css'
 import { Link, useNavigate } from 'react-router-dom'
 import Cart from './Cart'
 import { cartResponseContext } from '../Context/ContextShare'
+import { getcart } from '../Services/allApis'
 
 
 
 
-function Header({ count,handleShow }) {
+function Header({ handleShow }) {
 
   const [isLogged,setIsLogged]=useState(false)
+  const [id,setId]=useState()
+  
 
   useEffect(()=>{
       if(localStorage.getItem("currentUser")){
+        const uid = JSON.parse(localStorage.getItem("currentUser"))
+        // console.log(studentid)
+        setId( uid )
+     
         setIsLogged(true)
+     
       }
       else{
         setIsLogged(false)
       }
     },[])
+
+
+    useEffect(() => {
+      if (id) {
+        cartss(); // Re-fetch cart data when the user navigates to this page
+      }
+    }, [id]); 
 
   const [price,setPrice]=useState(0)
   const [show, setShow] = useState(false);
@@ -29,10 +44,9 @@ function Header({ count,handleShow }) {
 
   const [cart,setCart]=useState("")
 
+  const [cartn,setCartn]=useState()
 
-  useEffect(() => {
-       getCart()
-     }, [])
+
   
 
 
@@ -43,6 +57,18 @@ function Header({ count,handleShow }) {
      }
 
 
+     const cartss = async () => {
+           console.log(id)
+           const result = await getcart(id)
+           console.log(result)
+           if (result.status === 200) {
+             setCartn(result.data);
+         } else {
+             console.error("Failed to fetch cart:", result);
+         }
+       }
+
+       const numberOfItemsInCart = cartn ? cartn.length : '';
   // -------------------------------------
 //   useEffect(() => {
 //     handlePrice()
@@ -86,7 +112,7 @@ function Header({ count,handleShow }) {
   //   navigate('/cart')
 
   //  }
-
+console.log(id)
 
 
   return (
@@ -170,14 +196,14 @@ function Header({ count,handleShow }) {
           <span >
 
          
-            <Button variant="outline-danger" className='me-3' size='lg' style={{ textAlign: 'center' }} onClick={()=>handleShow(true)} ><i class="fa-solid fa-cart-shopping fa-xl" style={{ color: '#eb1e1e' }}></i>Cart <sup>{count}</sup> </Button>
+            <Button variant='danger'  className='me-3' size='lg' style={{ textAlign: 'center' }}  ><Link to={'/cart'}><i class="fa-solid fa-cart-shopping fa-xl" ></i>{numberOfItemsInCart}</Link></Button>
 
             {
                                 isLogged?
                                 
-                                <Button variant="outline-danger" size='lg' style={{ textAlign: 'center' }} className='btn ' onClick={handlelogout} >Log out</Button>
+                                <Button variant="outline-danger" size='lg' style={{ textAlign: 'center' }}className='btn ' onClick={handlelogout} >Log out</Button>
                                 :
-                                <Link to={'/login'}><Button variant="outline-danger" size='lg' style={{ textAlign: 'center' }} className='btn ' >Login</Button></Link>
+                                <Link to={'/login'}><Button variant="outline-danger" size='lg' style={{ textAlign: 'center' }}  >Login</Button></Link>
 
 
                             }
@@ -187,10 +213,10 @@ function Header({ count,handleShow }) {
         </Container>
       </Navbar>
       
-      <span className='d-flex align-items-center m-3' onClick={()=>handleShow(false)}>
+      {/* <span className='d-flex align-items-center m-3' onClick={()=>handleShow(false)}>
                 <i class="fa-solid fa-circle-arrow-left fa-2x" style={{ color: '#db3214' }}></i>
                 <span className='btn text-center p-0 m-0 '></span>
-              </span>
+              </span> */}
     </>
   )
 }

@@ -51,7 +51,7 @@ function Foodcard({food , addtoCart }) {
             <Card.Body>
               <Card.Title className='text-center te1'>{food.title} </Card.Title>
               <Card.Text className='text-center te2' >
-                Price:₹{food.price}
+                Price:{food.price}
               </Card.Text>
               
               <Button variant="outline-danger" size='lg' onClick={()=>addtoCart(food)} className='w-100' style={{ textAlign: 'center' }} ><i className="fa-solid fa-cart-plus" style={{ color: '#d5271a' }}></i>Cart </Button>

@@ -8,7 +8,6 @@ import Foodlist from '../Components/Foodlist'
 import Orderlist from '../Components/Orderlist'
  import { Link, Route,Routes } from 'react-router-dom'
  import { useNavigate } from 'react-router-dom'
- import {ToastContainer} from 'react-bootstrap'
 
 
 
@@ -124,7 +123,6 @@ function Admindashboard() {
       </Routes>
 
     <br />
-    <ToastContainer/>
     </>
   )
 }

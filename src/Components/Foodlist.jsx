@@ -4,7 +4,7 @@ import Editfood from './Editfood'
 import { adminFood } from '../Services/allApis'
 import { Link } from 'react-router-dom'
 import { editFoodResponseContext } from '../Context/ContextShare'
-import { ToastContainer ,toast} from 'react-toastify'
+import {  toast} from 'react-toastify'
 import { deleteFoodApi } from '../Services/allApis'
 
 function Foodlist() {
@@ -129,7 +129,6 @@ function Foodlist() {
 
 
                 </div>
-                 <ToastContainer/>  
             </div>
 
 

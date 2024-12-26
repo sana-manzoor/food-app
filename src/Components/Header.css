@@ -2,3 +2,11 @@
     font-family: "Arial Black", Times, serif;
     
 }
+
+
+@media (max-width: 767px) {
+        Button{
+           
+            width: 71px;
+        }
+  }

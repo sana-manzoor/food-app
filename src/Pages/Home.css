@@ -113,3 +113,9 @@
       background-position: 200% center;
     }
   }
+
+  @media (max-width: 768px) {
+    .hide-on-mobile {
+      display: none;
+    }
+  }

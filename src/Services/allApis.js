@@ -66,3 +66,50 @@ export const selCategory=async(search)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getcategory?search=${search}`,'','')
 }
 
+
+
+
+
+
+//to add to cart
+export const addcart=async(data)=>{
+    return await commonApi("POST",`${BASE_URL}/addcart`,data,'')
+}
+
+//to get cartlist
+export const getcart=async(id)=>{
+    return await commonApi("GET",`${BASE_URL}/cartlist/${id}`,'','')
+}
+
+ //to delete cartitem
+ export const deletecartApi=async(id)=>{
+    return await commonApi("DELETE",`${BASE_URL}/delcart/${id}`,{},'')
+}
+
+//to increase cart item
+export const incrcart=async(id)=>{
+    return await commonApi("GET",`${BASE_URL}/inccart/${id}`,'','')
+}
+
+//to decrease cart item
+export const decrcart=async(id)=>{
+    return await commonApi("GET",`${BASE_URL}/deccart/${id}`,'','')
+}
+
+//to add to orderslist
+export const addorder=async(data)=>{
+    return await commonApi("POST",`${BASE_URL}/addorder`,data,'')
+}
+
+//to get orderslist
+export const orderlist=async()=>{
+    return await commonApi("GET",`${BASE_URL}/orderlist`,'','')
+}
+
+//to remove cart
+export const deletecart=async(id)=>{
+    return await commonApi("DELETE",`${BASE_URL}/cartdel/${id}`,{},'')
+}
+
+
+

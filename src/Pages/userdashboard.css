@@ -8,6 +8,22 @@
     
 }
 
+@media (max-width: 767px) {
+    #b1 {
+      background-size: 1315px; /* Adjust the width for mobile */
+      background-position: right;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #b2 {
+        padding-left: 85px;
+     
+    }
+  }
+
+
+
 #b2{
     
     font-family: Constantia, Times, serif;
@@ -25,15 +41,30 @@
     text-shadow: 1px;
 }
 
+@media (max-width: 767px) {
+    #b3 {
+        font-size: 50px;
+    font-family: "Ink Free", Times, serif;
+    color: red;
+    text-shadow: 1px;
+    }
+  }
+
+
 #b4{
     /* border-color: #FF0000 !important;  */
     box-shadow: none !important;
     width: 500px;
-    
-
-      
 
 }
+
+@media (max-width: 767px) {
+    #b4 {
+        width: 184px;
+       
+     
+    }
+  }
 
 .form-control:focus{
     

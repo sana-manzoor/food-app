@@ -110,9 +110,11 @@ function Home() {
                             
                     </Col>
                     <Col  className='container' >
-                        <img src={delImg} className='img-fluid' alt="" />
+                        <img src={delImg} className='img-fluid hide-on-mobile' alt=""  />
                     </Col>
                 </Row>
+
+                
                 <div className='mt-5 mb-5 ms-4'>
                     <span className='mb-4  mt-3 hd'>What's on your</span> <span className='hs text-danger'>mind?</span> 
                     <div className='cat-row'>
@@ -160,7 +162,7 @@ function Home() {
 
 
 
-                <div >
+                {/* <div >
                         <Row className='me-3 ms-4'>
                             <Col >
                             <img src="https://www.menuspot.com.au/img/listings/cafe-hyderabad-taste-of-indian-food-taigum-29048.jpg" className='img-fluid' style={{width:'650px',height:'300px'}} alt="" />
@@ -169,7 +171,7 @@ function Home() {
                             <img src="https://www.nationsrestaurants.com/wp-content/uploads/2021/11/banner1.jpg" style={{width:'650px',height:'300px'}} className='img-fluid' alt="" />
                             </Col>
                         </Row>
-                    </div><br /><br />
+                    </div><br /><br /> */}
 
 
                 <div className='mt-4 ms-4 ms-5'>

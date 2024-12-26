@@ -13,6 +13,12 @@ import Orderlist from './Components/Orderlist';
 import Foodlist from './Components/Foodlist';
 import Cart from './Components/Cart';
 import Categ from './Components/Categ';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import Checkout from './Components/Checkout';
+import Payment from './Components/Payment';
+import Success from './Components/Success';
+
 
 
 
@@ -32,6 +38,8 @@ function App() {
         <Route path="/orderlist" element={<Orderlist/>}/>
         <Route path="/cart" element={<Cart/>}/> 
          <Route path="/category" element={<Categ/>}/>  
+         <Route path="/pay" element={<Payment/>}/> 
+         <Route path='/success' element={<Success/>} />
 
  
        
@@ -40,7 +48,9 @@ function App() {
 
       </Routes>
       <Footer/>
+      <ToastContainer/>
     </div>
+   
   );
 }
 

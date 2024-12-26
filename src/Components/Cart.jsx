@@ -1,155 +1,206 @@
 import React, { useEffect, useState } from 'react'
-import Header from './Header'
-import { Button } from 'react-bootstrap'
+
+import { deletecartApi ,incrcart,decrcart,getcart} from '../Services/allApis'
 import { Link } from 'react-router-dom'
-import { BASE_URL } from '../Services/baseUrl'
-import { addtoCart } from '../Services/allApis'
-import { ToastContainer,toast } from 'react-toastify'
+// import {  PayPalCardFieldsProvider, PayPalNameField, PayPalNumberField, PayPalExpiryField, PayPalCVVField, usePayPalCardFields } from '@paypal/react-paypal-js'
+// import { PayPalScriptProvider,PayPalButtons } from '@paypal/react-paypal-js';
 import { useNavigate } from 'react-router-dom'
 import './cart.css'
+import { useMemo } from 'react'
+import { BASE_URL } from '../Services/baseUrl'
+import { Nav } from 'react-bootstrap'
+import { Navbar } from 'react-bootstrap'
 
-function Cart({ cart,showCart }) {
+function Cart() {
+    
+  const [cartlist, setCartlist] = useState([])
+  const [total,setTotal]=useState(0)
 
-  const [upCart,setUpCart]=useState([])
+  const [uid, setUid] = useState("")
 
-  const [check,setCheck]=useState("")
+  const userid = () => {
+      if (localStorage.getItem("currentUser")) {
+        const uu = JSON.parse(localStorage.getItem("currentUser"))
+        console.log(uu)
+          setUid(uu)
+      }
+  }
 
-  useEffect(()=>{
-      setUpCart(cart)
-  },[cart])
+  console.log(uid)
 
   const navigate=useNavigate()
 
-  // const handleAddtocart=async()=>{
-  
-    
-  //   const {title,price,userId}=cart
-  //   let body={title,price,userId}
-  //   const res=await addtoCart(body)
-
-  //   if(res.status === 200){
-  //     console.log(res.data)
-  // }
-  // else{
-  //     console.log(res.response.data)
-  // }
-
-
-  // }
-
-  const handledelete=(_id)=>{
-    const arr=upCart.filter((item)=>item._id !== _id )
-    setUpCart(arr)
+  const cartss = async () => {
+      console.log(uid)
+      const result = await getcart(uid)
+      console.log(result)
+      if (result.status === 200) {
+        setCartlist(result.data);
+    } else {
+        console.error("Failed to fetch cart:", result);
+    }
   }
 
-  const handleCheckout=()=>{
-    setUpCart([])
 
-    toast.success("Order Placed Successfully!!")
-    
-    
+
+  const deletecartt = async (id) => {
+      // console.log(id)
+      const res = await deletecartApi(id)
+      console.log(res)
+      if (res.status === 200) {
+
+          cartss()
+      }
   }
 
-  
+  const increasee = async (id) => {
+      const res = await incrcart(id)
+      console.log(res)
+      cartss()
+  }
 
-  // console.log(check)
+  const decreasee = async (id) => {
+      const res = await decrcart(id)
+      console.log(res)
+      cartss()
+  }
+
+  const handletot=()=>{
+      if(total){
+          sessionStorage.setItem("amount", JSON.stringify(total))
+         
+      }
+  }
+
+
+  useEffect(() => {
+      userid()
+    
+  }, [])
+
+  useEffect(()=>{
+cartss()
+  },[uid])
+
+  useMemo(() => {
+      const totalAmount = cartlist?.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  setTotal(totalAmount || 0); 
+ 
+    }, [cartlist]);
+
+  console.log(cartlist)
   return (
-    <>
-      
-      <br />
-      {/* <Link to={'/userdashboard'} style={{ textDecoration: 'none' }} className='d-flex align-items-center m-3'>
-        <i class="fa-solid fa-circle-arrow-left fa-2x" style={{ color: '#db3214' }}></i>
-        <span className='btn text-center p-0 m-0 '></span>
-      </Link> */}
-      <br />
-      <div className='row align-items-center ms-5 mb-5'>
-        <div className='col-lg-7'>
+   <div>
+     {
 
-          {/* first row */}
-
-          {
-            upCart.map((item, cartindex) => {
-
-              return (
-
-                <div className='row align-items-center border shadow mb-3 fnt'>
-                  <div className='col-lg-6 '>
-                    <h3 className='mb-3 '>{item.title}</h3>
-
-                    <Button variant="outline-danger" className='btn-sm me-1  '
-                    
-                    onClick={()=>{
-                      const newCart=upCart.map((item,index)=>{
-                        return cartindex=== index ? { ...item, quantity : item.quantity - 1} :item
-                      })
-                      setUpCart(newCart)
-                      }}
-                    
-                    > - </Button>
-                    <span className='h5'> {item.quantity} </span>
-                    <Button variant="outline-danger" className='btn-sm ms-1 '
-
-                     onClick={()=>{
-                      const newCart=upCart.map((item,index)=>{
-                        return cartindex=== index ? { ...item, quantity : item.quantity +1} :item
-                      })
-                      setUpCart(newCart)
-                      }}
-
-                      >+</Button>
-                    <h5 className='mt-3 mb-2' >Price:{item.price * item.quantity}</h5>
-                  </div>
-                  <div className='col-lg-4'>
-                    <img src={`${BASE_URL}/upload/${item.food_image}`} width={120} alt="" />
-
-                  </div>
-
-                  <div className='col-lg-2'>
-                    <i className="fa-solid fa-trash fa-lg " onClick={()=>handledelete(item._id)} style={{ color: '#db1414' }}></i>
-
-                  </div>
-
-
-                </div>
-
-
-              )
-            })
-
-
-          }
+cartlist?.length > 0 ?
 
 
 
+    <div className="p-5 row gx-0" style={{ minHeight: '70vh' }}>
+        <div className="col-md-8 me-5" >
+            <h3>Cart Summary</h3>
+
+            <table className="table table-bordered shadow p-3" >
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th className='text-center'>Image</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    {/* <th>Total Price</th> */}
+                    <th></th>
+                </tr>
+
+
+
+                {
+                    cartlist?.map((item, index) => (
+                        <tr >
+                            <td>{index + 1}</td>
+                            <td>{item.title}</td>
+
+
+                            <td>
+                                <img src={`${BASE_URL}/upload/${item.food_image}`} width={'180px'} height={"180px"} alt="" />
+                            </td>
+                            {/* <!-- <td>{{i.price}}</td> --> */}
+                            <td> {item.price}</td>
+                            <td>
+                                <span>
+                                    <button className="btn" onClick={() => { increasee(item._id) }} >+</button>
+                                    {item.quantity}
+                                    <button className="btn" onClick={() => { decreasee(item._id) }} >-</button>
+
+                                </span>
+
+                            </td>
+
+                            <td onClick={() => { deletecartt(item._id) }} ><i className="fa-solid fa-trash fa-xl" style={{ cursor: 'pointer' }} ></i></td>
+                        </tr>
+
+
+                    ))
+                }
+
+
+
+            </table>
 
 
 
         </div>
 
+        <div className="col-md-3 ms-2 ">
+            <div class=" mt-5 p-5 w-100  shadow">
+                <h5>Total Products: <span>{cartlist?.length}</span></h5>
+
+                {
+                    cartlist?.length > 0 ?
+                        <h5>Total Amount:
+                            {/* {
+                               
+                                cartlist.map(item => item.price * item.quantity).reduce((p1, p2)=>setTotal(p1+p2))
+
+                                
+                            } */}
+                            {total}
+                        </h5>
+                        :
+                        <span>0</span>
+                }
+
+
+            </div>
+            <div className="d-grid py-3">
+            <Link to={'/pay'}><button className="btn btn-outline-dark" onClick={handletot} >Check Out</button> </Link>
+                {/* <PayPalScriptProvider options={{ clientId: "test" }} >
+                    <PayPalButtons style={{ layout: "horizontal" }} />
+                </PayPalScriptProvider> */}
+
+            </div>
+
+        </div>
+    </div>
+    :
+    <div style={{ height: '70vh' }}>
+        <h2 className='text-center mt-5'>No Cart Summary....<Link to={'/'}><span className='text-dark' style={{ textDecoration: 'underline' }}>Click here to shop!!</span></Link></h2>
+    </div>
+
+
+}
+
+
+
+   </div>
+            
+  )
 
       
 
-    
+} 
  
- <div className='col-lg-5'>
-            <div className='d-flex align-items-center flex-column'>
-             
-              <h2>SubTotal:₹
-                {
-                    upCart.map(item=>item.price * item.quantity).reduce((total,value)=>total + value,0)
-                }
-                
-              </h2><br />
-              <Button variant="outline-danger" style={{ textAlign: 'center' }} onClick={handleCheckout} >CHECK OUT</Button>
+  
 
-            </div>
-          </div>
- 
-
-      </div>
-      <ToastContainer/>
-    </>
-  )
-}
 
 export default Cart

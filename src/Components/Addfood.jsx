@@ -65,11 +65,12 @@ function Addfood() {
       if (res.status === 200) {
         // setAddProjectResponse(res.data)
         toast.success("Food added successfully..!!")
-        setFoodDetails({title:" ", price:" ", category:" ", description:" "})
+        setFoodDetails({title:"", price:"", category:"", description:""})
+        setPreview("")
         // navigate('/admindashboard')
       }
       else {
-        toast.error("Project adding failed..!!")
+        toast.error("food adding failed..!!")
       }
 
 
